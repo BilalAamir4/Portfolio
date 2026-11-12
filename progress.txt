@@ -1,0 +1,11 @@
+[DONE] Task 0: Scaffolded project and installed dependencies — 2026-06-10
+[DONE] Task 1: Created Global Layout, Navbar, and Footer components — 2026-06-10
+[DONE] Task 2: Created Data Layer for Projects and Skills — 2026-06-10
+[DONE] Task 3: Created MotionWrapper and Hero section on Homepage — 2026-06-10
+[DONE] Task 4: Implemented ProjectCard Component — 2026-06-10
+[DONE] Task 5: Built Projects Page with Filter UI — 2026-06-10
+[DONE] Task 6: Developed dynamic Project Detail page — 2026-06-10
+[DONE] Task 7: Built static About page with Bio, Education, and Skills — 2026-06-10
+[DONE] Task 8: Created Contact page with social links and Formspree integration — 2026-06-10
+[DONE] Task 9: Configured next.config.js remotePatterns and final SEO tags — 2026-06-10
+[DONE] Task 10: Verified build and fixed TypeScript/Hydration errors — 2026-06-10
