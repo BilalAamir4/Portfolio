@@ -12,7 +12,7 @@ export function SectionHeading({ children, id }: Props) {
     <>
       <h2
         id={id}
-        className="mb-3 text-[clamp(32px,4vw,52px)] font-bold leading-[1.1] tracking-[-0.015em]"
+        className="mt-0 mb-3 text-[clamp(32px,4vw,52px)] font-bold tracking-[-0.015em]"
       >
         {children}
       </h2>

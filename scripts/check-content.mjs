@@ -11,6 +11,7 @@
  * Content files are TypeScript with only erasable syntax, so Node (22.18+)
  * loads them directly. Run: node scripts/check-content.mjs
  */
+import { existsSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -122,6 +123,17 @@ for (const { name, exports } of modules) {
         `${name}: "${value.name ?? value.key}" is published but its slug "${value.slug}" is not lowercase letters and hyphens`,
       );
     }
+  }
+}
+
+// The résumé link renders only when label and href are set; the file must exist.
+const profile = modules.find((m) => m.name === "content/profile.ts")?.exports.profile;
+const resume = profile?.contact?.resume;
+if (resume?.href) {
+  if (!resume.href.startsWith("/")) {
+    errors.push(`content/profile.ts: contact.resume.href must be a path under public/, like "/resume.pdf"`);
+  } else if (!existsSync(join(root, "public", ...resume.href.slice(1).split("/")))) {
+    errors.push(`content/profile.ts: contact.resume.href is "${resume.href}" but public${resume.href} does not exist`);
   }
 }
 

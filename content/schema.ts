@@ -158,6 +158,20 @@ export type InsightexProject = InsightexFacts & {
     windowSeconds: number;
     windowCount: number;
     questions: LectureQuestion[];
+    /**
+     * Illustrative bar heights in percent, from the mockup script: the three
+     * top windows get `top`, every other window
+     * base + ((index * mixIndex + question * mixQuestion) % spread).
+     */
+    scores: {
+      top: [number, number, number];
+      base: number;
+      spread: number;
+      mixIndex: number;
+      mixQuestion: number;
+      /** Height of every bar during the first step. */
+      resting: number;
+    };
     status: { rewriting: string; scoring: string; found: string };
     /** Clock labels under the timeline: "0:00" and "11:28". */
     startLabel: string;
@@ -253,6 +267,10 @@ export type AgenticRagProject = AgenticRagFacts & {
     contextPrecision: string;
     contextRecall: string;
     medianLatency: string;
+    /** "{n} s" */
+    latencyTemplate: string;
+    /** Decimal places for RAGAS scores. */
+    scoreDecimals: number;
   };
 };
 

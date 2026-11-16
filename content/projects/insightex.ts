@@ -81,6 +81,7 @@ export const insightex: InsightexProject = {
       { text: "Why does batch learning struggle with big data?", top: [9, 10, 5] },
       { text: "Online learning kya hoti hai?", top: [14, 15, 19] },
     ],
+    scores: { top: [96, 84, 74], base: 16, spread: 34, mixIndex: 37, mixQuestion: 53, resting: 8 },
     status: {
       rewriting: "Rewriting the question into English, and keeping the original wording too.",
       scoring: `Scoring all ${windowCount} windows of the transcript against the question.`,

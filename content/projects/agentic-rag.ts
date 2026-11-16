@@ -57,5 +57,7 @@ export const agenticRag: AgenticRagProject = {
     contextPrecision: "Context precision",
     contextRecall: "Context recall",
     medianLatency: "Median latency",
+    latencyTemplate: "{n} s",
+    scoreDecimals: 2,
   },
 };

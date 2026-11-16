@@ -24,7 +24,9 @@ export function LinkButton({ href, children, variant = "outline", newTab = false
     className,
   );
 
-  if (href.startsWith("/") && !newTab) {
+  // next/link for page routes only; files such as /resume.pdf stay plain links.
+  const isRoute = href.startsWith("/") && !/\.[a-z0-9]+$/i.test(href);
+  if (isRoute && !newTab) {
     return (
       <Link href={href} className={classes}>
         {children}

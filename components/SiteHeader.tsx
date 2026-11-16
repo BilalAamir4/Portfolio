@@ -21,6 +21,9 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
   const isHome = pathname === "/";
   const barRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState("");
+  // The last section is too short to reach the middle of the viewport, so
+  // it becomes active when the page is scrolled to the bottom.
+  const [atBottom, setAtBottom] = useState(false);
 
   // Tell the bootstrap script in <head> that scripts are running, so it
   // keeps .rv-on (its failsafe removes the class if this never happens).
@@ -39,6 +42,7 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
       const max = el.scrollHeight - el.clientHeight;
       const progress = max > 0 ? Math.min(1, Math.max(0, el.scrollTop / max)) : 0;
       bar.style.transform = `scaleX(${progress})`;
+      setAtBottom(max > 0 && el.scrollTop >= max - 4);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -76,26 +80,32 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
     };
   }, [isHome, nav]);
 
+  const lastSection = nav[nav.length - 1]?.sectionId ?? "";
+  const current = isHome && atBottom ? lastSection : active;
+
   return (
     <header className="sticky top-0 z-10 border-b border-line bg-paper/92 backdrop-blur-[8px]">
       <div className="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-1.5">
         {isHome ? (
-          <a href="#top" className="py-3 font-display text-xl font-bold no-underline">
+          <a href="#top" className="py-3 font-display text-[20px] font-bold no-underline">
             {name}
           </a>
         ) : (
-          <Link href="/" className="py-3 font-display text-xl font-bold no-underline">
+          <Link href="/" className="py-3 font-display text-[20px] font-bold no-underline">
             {name}
           </Link>
         )}
         {isHome ? (
-          <nav aria-label="Sections" className="flex flex-wrap gap-x-7 gap-y-1 font-medium">
+          <nav
+            aria-label="Sections"
+            className="flex flex-wrap gap-x-7 gap-y-1 font-medium max-[479px]:w-full max-[479px]:justify-between max-[479px]:gap-x-3"
+          >
             {nav.map(({ label, sectionId }) => (
               <a
                 key={sectionId}
                 href={`#${sectionId}`}
-                className={cn("navlink", active === sectionId && "on")}
-                aria-current={active === sectionId ? "location" : undefined}
+                className={cn("navlink", current === sectionId && "on")}
+                aria-current={current === sectionId ? "location" : undefined}
               >
                 {label}
               </a>

@@ -94,8 +94,13 @@
   }
 }
 
+/* 72px clears the one-row header; on phones the nav wraps under the name. */
 @utility scroll-target {
   scroll-margin-top: 72px;
+
+  @media (width < 640px) {
+    scroll-margin-top: 128px;
+  }
 }
 
 /* ---------- Keyframes ---------- */
@@ -379,5 +384,14 @@
   .rowname,
   .navlink::after {
     transition: none;
+  }
+
+  /* Nothing moves: this also covers transitions set inline by the
+     interactive widgets. State changes still happen, instantly. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }
