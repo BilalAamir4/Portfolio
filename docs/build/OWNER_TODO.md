@@ -13,7 +13,7 @@ When a project's README has its "Portfolio facts" block filled in, prompt 5 (`do
 - [ ] **Insightex role line**, one line on your part of the two-person project. `content/projects/insightex.ts` → `facts.roleLine` (key `roleLine` in the README facts block). Hidden until supplied.
 - [ ] **Résumé PDF.** Put the file at `public/resume.pdf`, then set `content/profile.ts` → `contact.resume.href` to `"/resume.pdf"` and `contact.resume.label` to the link text you want. The link stays hidden until both are set.
 - [ ] **Confirm the LinkedIn URL.** `content/profile.ts` → `contact.links` (LinkedIn), currently `https://www.linkedin.com/in/bilalaamir4`.
-- [ ] **Production site URL.** Set the environment variable `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`, no trailing slash) in the hosting provider. It is the base for Open Graph, the sitemap and canonical links. Without it the site falls back to `http://localhost:3000`.
+- [ ] **Production site URL.** Set the environment variable `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`, no trailing slash) in the hosting provider. It is the base for Open Graph, the sitemap, robots.txt and canonical links. See `.env.example`. Without it a Vercel deployment falls back to the project's production `*.vercel.app` domain, and a local build to `http://localhost:3000`.
 
 ## Agentic RAG Docs Assistant (published, results pending)
 

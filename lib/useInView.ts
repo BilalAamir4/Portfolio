@@ -1,5 +1,3 @@
-import { useEffect, useState, type RefObject } from "react";
-
 export type InViewOptions = {
   rootMargin?: string;
   threshold?: number;
@@ -59,37 +57,4 @@ export function observe(
       shared.delete(key);
     }
   };
-}
-
-/**
- * True while the element intersects (or, with `once`, from the first time
- * it does). Uses the shared observer above.
- */
-export function useInView(
-  ref: RefObject<Element | null>,
-  { once = false, ...options }: InViewOptions & { once?: boolean } = {},
-): boolean {
-  const [inView, setInView] = useState(false);
-  const { rootMargin, threshold } = options;
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    let stop = () => {};
-    stop = observe(
-      element,
-      (visible) => {
-        if (visible && once) {
-          setInView(true);
-          stop();
-          return;
-        }
-        setInView(visible);
-      },
-      { rootMargin, threshold },
-    );
-    return () => stop();
-  }, [ref, once, rootMargin, threshold]);
-
-  return inView;
 }

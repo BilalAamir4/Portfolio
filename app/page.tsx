@@ -20,6 +20,7 @@ import { fill } from "@/lib/format";
 export const metadata: Metadata = {
   title: { absolute: profile.meta.title },
   description: profile.meta.description,
+  alternates: { canonical: "/" },
 };
 
 const { ui } = profile;

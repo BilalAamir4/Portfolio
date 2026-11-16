@@ -10,13 +10,19 @@ import type { NavItem } from "@/content/schema";
 type Props = {
   name: string;
   nav: readonly NavItem[];
+  navLabel: string;
   backLabel: string;
 };
 
 /** Root margin from spec 7.2: the section crossing the middle of the viewport. */
 const ACTIVE_BAND = { rootMargin: "-40% 0px -55% 0px", threshold: 0 };
+/**
+ * The footer is (almost) fully in view only when the page is scrolled to
+ * the end. Not 1: a sub-pixel footer height can keep the ratio just below it.
+ */
+const PAGE_END = { threshold: 0.9 };
 
-export function SiteHeader({ name, nav, backLabel }: Props) {
+export function SiteHeader({ name, nav, navLabel, backLabel }: Props) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const barRef = useRef<HTMLDivElement>(null);
@@ -42,7 +48,6 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
       const max = el.scrollHeight - el.clientHeight;
       const progress = max > 0 ? Math.min(1, Math.max(0, el.scrollTop / max)) : 0;
       bar.style.transform = `scaleX(${progress})`;
-      setAtBottom(max > 0 && el.scrollTop >= max - 4);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -74,10 +79,11 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
         ),
       ];
     });
-    return () => {
-      stops.forEach((stop) => stop());
-      setActive("");
-    };
+    // No scroll handler sets state: the end of the page is detected by
+    // watching the footer.
+    const footer = document.querySelector("body > footer");
+    if (footer) stops.push(observe(footer, setAtBottom, PAGE_END));
+    return () => stops.forEach((stop) => stop());
   }, [isHome, nav]);
 
   const lastSection = nav[nav.length - 1]?.sectionId ?? "";
@@ -97,7 +103,7 @@ export function SiteHeader({ name, nav, backLabel }: Props) {
         )}
         {isHome ? (
           <nav
-            aria-label="Sections"
+            aria-label={navLabel}
             className="flex flex-wrap gap-x-7 gap-y-1 font-medium max-[479px]:w-full max-[479px]:justify-between max-[479px]:gap-x-3"
           >
             {nav.map(({ label, sectionId }) => (

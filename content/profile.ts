@@ -20,6 +20,7 @@ export const profile: Profile = {
     { label: "Contact", sectionId: "contact" },
   ],
   ui: {
+    sectionsNav: "Sections",
     backToAllWork: "Back to all work",
     readCaseStudy: "Read the case study",
     viewRepository: "View the repository",

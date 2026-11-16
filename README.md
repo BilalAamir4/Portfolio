@@ -17,7 +17,7 @@ npm run build        # runs the content check first
 npm start            # serve the production build
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`) in production. It is the base URL for Open Graph images, the sitemap and canonical links.
+Set `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`) in production; `.env.example` documents it. It is the base URL for Open Graph images, the sitemap, robots.txt and canonical links. Without it, a Vercel deployment uses the project's production domain and a local build uses `http://localhost:3000`.
 
 ## Where content lives
 

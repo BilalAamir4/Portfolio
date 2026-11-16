@@ -59,6 +59,8 @@ export type Profile = {
   nav: NavItem[];
   /** Labels reused across pages. */
   ui: {
+    /** Accessible name of the home section navigation. */
+    sectionsNav: string;
     backToAllWork: string;
     readCaseStudy: string;
     viewRepository: string;

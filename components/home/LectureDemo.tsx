@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { PillButton } from "@/components/PillButton";
 import type { InsightexProject } from "@/content/schema";
 import { clock, cn, fill } from "@/lib/format";
@@ -32,6 +32,7 @@ export function LectureDemo({ demo }: { demo: Demo }) {
   // server-rendered final state to step 1 without animating down.
   const [snap, setSnap] = useState(false);
   const timers = useRef<number[]>([]);
+  const jumpLabelId = useId();
 
   const clearTimers = useCallback(() => {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -145,8 +146,14 @@ export function LectureDemo({ demo }: { demo: Demo }) {
       </div>
 
       {phase === 3 && (
-        <div className="pop mt-6 flex flex-wrap items-center gap-3">
-          <span className="font-semibold">{demo.jumpLabel}</span>
+        <div
+          role="group"
+          aria-labelledby={jumpLabelId}
+          className="pop mt-6 flex flex-wrap items-center gap-3"
+        >
+          <span id={jumpLabelId} className="font-semibold">
+            {demo.jumpLabel}
+          </span>
           {current.top.map((w) => {
             const start = w * demo.windowSeconds;
             const on = second === start;

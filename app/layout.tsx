@@ -4,6 +4,7 @@ import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { profile } from "@/content/profile";
+import { siteUrl, socialMetadata } from "@/lib/site";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -23,9 +24,6 @@ const body = Instrument_Sans({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -35,19 +33,11 @@ export const metadata: Metadata = {
   description: profile.meta.description,
   applicationName: profile.name,
   authors: [{ name: profile.name }],
-  openGraph: {
-    type: "website",
-    siteName: profile.name,
-    locale: "en",
+  ...socialMetadata({
     title: profile.meta.title,
     description: profile.meta.description,
-    url: "/",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: profile.meta.title,
-    description: profile.meta.description,
-  },
+    path: "/",
+  }),
 };
 
 /**
@@ -72,7 +62,12 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           declares --font-display on :root, and an element's own declaration
           always beats an inherited one, whatever the stylesheet order. */}
       <body className={`${display.variable} ${body.variable}`}>
-        <SiteHeader name={profile.name} nav={profile.nav} backLabel={profile.ui.backToAllWork} />
+        <SiteHeader
+          name={profile.name}
+          nav={profile.nav}
+          navLabel={profile.ui.sectionsNav}
+          backLabel={profile.ui.backToAllWork}
+        />
         <main id="top" className="container-page">
           {children}
         </main>

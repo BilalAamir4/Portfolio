@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/Reveal";
 
-export type LedgerRow = {
+type LedgerRow = {
   heading: string;
   body: string;
   /** Third column, drawn with a highlight fill (Insightex "what stayed"). */
