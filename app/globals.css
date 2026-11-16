@@ -1,0 +1,383 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (DESIGN_SPEC section 4). These are the only colours in the
+ * project; no hex value appears anywhere else in the code.
+ */
+@theme {
+  --color-*: initial;
+  --color-paper: #f2f4ef;
+  --color-surface: #fbfcf9;
+  --color-ink: #10201b;
+  --color-ink-soft: #33443d;
+  --color-muted: #4a5a53;
+  --color-line: #c9d1c8;
+  --color-track: #dde3dc;
+  --color-idle: #c3ccc3;
+  --color-moss: #2e5a4c;
+  --color-moss-tint: #e6eee8;
+  --color-highlight: #ffd84a;
+  --color-alert: #b5371f;
+  --color-alert-tint: #f7e9e5;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+/*
+ * Fonts. next/font sets --font-display and --font-body on <body> (see
+ * layout.tsx). `inline` makes the font-display and font-sans utilities use
+ * those variables directly.
+ */
+@theme inline {
+  --font-*: initial;
+  --font-display: var(--font-display), system-ui, sans-serif;
+  --font-sans: var(--font-body), system-ui, sans-serif;
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+
+  /* Preflight strips link underlines; the mockups keep the browser default. */
+  a {
+    color: var(--color-ink);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-moss);
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* Focus ring for every interactive element (7.4). */
+  :where(a, button, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Layout ---------- */
+
+@utility container-page {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 32px;
+
+  @media (width < 480px) {
+    padding-inline: 20px;
+  }
+}
+
+@utility scroll-target {
+  scroll-margin-top: 72px;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes intro {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hlin {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-ink) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-ink) 0%, transparent);
+  }
+}
+
+/* ---------- Motion classes (DESIGN_SPEC section 7) ---------- */
+
+@layer components {
+  /* 7.3 Page-load entrance. Stagger with style={{ animationDelay }}. */
+  .intro {
+    animation: intro 900ms var(--ease-out-soft) both;
+  }
+
+  /* 7.2 Scroll reveal. Hidden only when <html> has .rv-on (set by the
+     inline bootstrap script), so no-JS and reduced-motion show everything.
+     Reveal sets [data-in] once the element is 5% visible. */
+  .rv-on .rise {
+    opacity: 0;
+    transform: translateY(56px);
+    transition:
+      opacity 850ms var(--ease-out-soft) var(--d, 0ms),
+      transform 850ms var(--ease-out-soft) var(--d, 0ms);
+  }
+  .rv-on .rise[data-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Rule under each home section heading. */
+  .rv-on .draw {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1100ms var(--ease-out-soft) var(--d, 0ms);
+  }
+  .rv-on .draw[data-in] {
+    transform: scaleX(1);
+  }
+
+  /* Memory bars on Insightex. */
+  .rv-on .bar {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1300ms var(--ease-out-soft) 150ms;
+  }
+  .rv-on .bar[data-in] {
+    transform: scaleX(1);
+  }
+
+  /* Highlighter draw on the planted note, when its revealed section enters. */
+  .note {
+    background-image: linear-gradient(var(--color-highlight), var(--color-highlight));
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 2px 0;
+  }
+  .rv-on .note {
+    background-size: 0% 100%;
+    transition: background-size 1600ms cubic-bezier(0.3, 0.7, 0.2, 1) 300ms;
+  }
+  .rv-on [data-in] .note {
+    background-size: 100% 100%;
+  }
+
+  /* Static highlighter mark (contact email). */
+  .mark {
+    background-image: linear-gradient(var(--color-highlight), var(--color-highlight));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 34%;
+  }
+
+  /* 7.4 Buttons: lift with a hard shadow. */
+  .btn {
+    transition:
+      transform 200ms,
+      box-shadow 200ms,
+      background-color 250ms,
+      color 250ms,
+      background-size 400ms var(--ease-out-soft);
+  }
+  .btn:hover,
+  .btn:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 0 var(--color-ink);
+  }
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 0 0 var(--color-ink);
+  }
+
+  /* Highlight fill sweeping left to right. */
+  .sweep {
+    background-image: linear-gradient(var(--color-highlight), var(--color-highlight));
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: background-size 400ms var(--ease-out-soft);
+  }
+  .sweep.btn {
+    transition:
+      transform 200ms,
+      box-shadow 200ms,
+      background-size 400ms var(--ease-out-soft);
+  }
+  .sweep:hover,
+  .sweep:focus-visible {
+    background-size: 100% 100%;
+  }
+
+  /* Earlier-work row name slides right while the row sweeps. */
+  .rowname {
+    display: inline-block;
+    transition: transform 350ms var(--ease-out-soft);
+  }
+  a:hover .rowname,
+  a:focus-visible .rowname {
+    transform: translateX(12px);
+  }
+
+  /* Header nav underline; .on marks the active section. */
+  .navlink {
+    position: relative;
+    text-decoration: none;
+    padding: 12px 2px;
+  }
+  .navlink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8px;
+    height: 2px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 300ms;
+  }
+  .navlink:hover::after,
+  .navlink:focus-visible::after,
+  .navlink.on::after {
+    transform: scaleX(1);
+  }
+
+  /* Short entrances for content that appears after an interaction. */
+  .pop {
+    animation: pop 500ms var(--ease-out-soft) both;
+  }
+  .step {
+    animation: pop 500ms var(--ease-out-soft) both;
+  }
+  .swap {
+    animation: swap 450ms var(--ease-out-soft) both;
+  }
+
+  /* Highlighter drawing across retrieved text (home Planted Note panel). */
+  .hlin {
+    background-image: linear-gradient(var(--color-highlight), var(--color-highlight));
+    background-repeat: no-repeat;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    animation: hlin 1300ms cubic-bezier(0.3, 0.7, 0.2, 1) 900ms both;
+  }
+
+  /* Leaked answer: appears at 1.5s, shakes once at 2.1s. */
+  .shake {
+    animation:
+      pop 500ms var(--ease-out-soft) 1500ms both,
+      shake 500ms 2100ms;
+  }
+
+  /* Current step of an agent run. */
+  .pulse {
+    animation: pulse-ring 1s ease-in-out infinite;
+  }
+}
+
+/* ---------- 7.1 Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .intro,
+  .pop,
+  .step,
+  .swap,
+  .hlin,
+  .shake,
+  .pulse {
+    animation: none;
+  }
+
+  .hlin {
+    background-size: 100% 100%;
+  }
+
+  /* Never hidden, never moving, even if .rv-on is somehow present. */
+  .rv-on .rise,
+  .rv-on .draw,
+  .rv-on .bar,
+  .rv-on .note {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rv-on .note {
+    background-size: 100% 100%;
+  }
+
+  .sweep,
+  .btn,
+  .rowname,
+  .navlink::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Agent project case study template</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#F2F4EF}
+a{color:#10201B}a:hover{color:#2E5A4C}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid #10201B;outline-offset:3px}
+.sweep{background-image:linear-gradient(var(--hl),var(--hl));background-repeat:no-repeat;background-size:0% 100%}
+.sweep:hover,.sweep:focus-visible{background-size:100% 100%}
+.intro{animation:intro .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes intro{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.rv-on .rise{opacity:0;transform:translateY(56px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv-on .rise[data-in]{opacity:1;transform:none}
+.btn{transition:transform .2s,box-shadow .2s,background-size .4s cubic-bezier(.2,.8,.2,1)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 4px 0 #10201B}
+.btn:active{transform:translateY(0);box-shadow:0 0 0 #10201B}
+.pulse{animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,32,27,.35)}50%{box-shadow:0 0 0 8px rgba(16,32,27,0)}}
+@media (prefers-reduced-motion: reduce){.intro,.pulse{animation:none}.btn{transition:none}}
+</style>
+</helmet>
+<div style="--hl: {{hl}}; background: #F2F4EF; color: #10201B; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 17px; line-height: 1.6">
+
+<header style="position: sticky; top: 0; z-index: 5; background: rgba(242,244,239,.92); backdrop-filter: blur(8px); border-bottom: 1px solid #C9D1C8">
+<div style="max-width: 1120px; margin: 0 auto; padding: 6px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px">
+<a href="Main.dc.html" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; padding: 12px 0">Bilal Aamir</a>
+<a href="Main.dc.html" style="font-weight: 500; padding: 12px 0">Back to all work</a>
+</div>
+<div id="prog" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: #10201B; transform: scaleX(0); transform-origin: left"></div>
+</header>
+
+<main style="max-width: 1120px; margin: 0 auto; padding: 0 32px">
+
+<section style="padding: 88px 0 64px">
+<p class="intro" style="margin: 0 0 16px; color: #4A5A53">Template page. Every value in square brackets gets filled in once the project is built.</p>
+<h1 class="intro" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(40px, 6.2vw, 88px); line-height: 1.02; letter-spacing: -0.02em; animation-delay: .1s">[PROJECT NAME]</h1>
+<p class="intro" style="margin: 28px 0 0; max-width: 60ch; font-size: 22px; line-height: 1.45; color: #33443D; animation-delay: .2s">A team of agents that reviews a pull request. One plans the review, calls specialist reviewers, spawns extra workers for large changes, and waits for a person before posting anything.</p>
+<div class="intro" style="display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 28px; animation-delay: .3s">
+<a class="sweep btn" href="#" style="display: inline-block; padding: 12px 20px; border: 1.5px solid #10201B; border-radius: 999px; font-weight: 600; text-decoration: none">[REPOSITORY LINK]</a>
+<a href="#" style="display: inline-block; padding: 12px 0; font-weight: 600">[DEMO RECORDING LINK]</a>
+</div>
+</section>
+
+<section class="rise" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px 64px; padding: 56px 0; border-top: 2px solid #10201B">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">The question</h2>
+<div style="max-width: 62ch">
+<p style="margin: 0">Multi-agent systems are easy to build and hard to justify. This project asks one thing: does splitting a code review across several agents find more real bugs than a single agent, and what does it cost in money and time?</p>
+<p style="margin: 16px 0 0">To answer it, [NUMBER] pull requests were prepared with known bugs planted in them, and each version of the reviewer was scored on how many it found.</p>
+</div>
+</section>
+
+<section style="padding: 56px 0; border-top: 1px solid #C9D1C8">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">How a review runs</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 20px">
+<button class="btn" type="button" onClick="{{run}}" style="min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1.5px solid #10201B; font-weight: 600; color: #10201B; background: var(--hl)">Run a review</button>
+<p aria-live="polite" style="margin: 0; flex: 1 1 320px; font-weight: 500">{{note}}</p>
+</div>
+
+<div aria-hidden="true" style="margin-top: 28px; border: 1.5px solid #10201B; border-radius: 14px; background: #FBFCF9; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 0">
+<div class="{{c0}}" style="{{s0}}">Pull request</div>
+<div style="{{l1}}"></div>
+<div class="{{c1}}" style="{{s1}}">Orchestrator: reads the diff, plans the review</div>
+</div>
+<div style="{{g2}}">
+<p style="margin: 0 0 12px; font-weight: 600">Called: three standing specialists</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div class="{{c2}}" style="{{b2}}"><strong>Bug reviewer</strong><br>logic errors and edge cases</div>
+<div class="{{c2}}" style="{{b2}}"><strong>Security reviewer</strong><br>its own service, called over A2A</div>
+<div class="{{c2}}" style="{{b2}}"><strong>Test reviewer</strong><br>runs the tests in a sandbox</div>
+</div>
+</div>
+<div style="{{g3}}">
+<p style="margin: 0 0 12px; font-weight: 600">Spawned: one temporary worker per file, only for large changes</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px">
+<sc-for list="{{workers}}" as="w" hint-placeholder-count="4">
+<div style="{{w.style}}">{{w.label}}</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 0">
+<div class="{{c4}}" style="{{s4}}">Verifier: drops weak findings</div>
+<div style="{{l5}}"></div>
+<div class="{{c5}}" style="{{s5}}">A person approves, edits or rejects</div>
+<div style="{{l6}}"></div>
+<div class="{{c6}}" style="{{s6}}">Comments posted</div>
+</div>
+</div>
+</section>
+
+<section style="padding: 56px 0; border-top: 1px solid #C9D1C8">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">Results</h2>
+<p style="margin: 12px 0 0; max-width: 64ch; color: #33443D">[ONE SENTENCE: WHICH VERSION WON AND BY HOW MUCH]. Each version ran [NUMBER] times on the full set.</p>
+<div style="overflow-x: auto; margin-top: 28px">
+<table style="width: 100%; min-width: 720px; border-collapse: collapse; font-variant-numeric: tabular-nums">
+<thead>
+<tr style="border-bottom: 2px solid #10201B; text-align: left">
+<th scope="col" style="padding: 12px 16px 12px 0; font-weight: 600">Version</th>
+<th scope="col" style="padding: 12px 16px; font-weight: 600">Bugs found</th>
+<th scope="col" style="padding: 12px 16px; font-weight: 600">Findings that were real</th>
+<th scope="col" style="padding: 12px 16px; font-weight: 600">False alarms per clean PR</th>
+<th scope="col" style="padding: 12px 16px; font-weight: 600">Cost per review</th>
+<th scope="col" style="padding: 12px 0 12px 16px; font-weight: 600">Time per review</th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<tr class="rise" style="border-bottom: 1px solid #C9D1C8">
+<th scope="row" style="padding: 16px 16px 16px 0; text-align: left; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 600">{{r.name}}</th>
+<td style="padding: 16px">[X%]</td>
+<td style="padding: 16px">[X%]</td>
+<td style="padding: 16px">[X]</td>
+<td style="padding: 16px">[X]</td>
+<td style="padding: 16px 0 16px 16px">[X s]</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<p style="margin: 20px 0 0; max-width: 70ch; color: #4A5A53">[ONE LINE ON SMALL CHANGES VERSUS LARGE CHANGES, WHERE SPAWNING WORKERS SHOULD MATTER MOST]</p>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px 64px; padding: 56px 0; border-top: 1px solid #C9D1C8">
+<div class="rise">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">One it caught</h2>
+<p style="margin: 16px 0 0; max-width: 52ch">[THE PLANTED BUG, IN ONE SENTENCE]</p>
+<p style="margin: 16px 0 0; max-width: 52ch; padding: 14px 18px; border-left: 4px solid #2E5A4C; background: #E6EEE8">[THE REVIEW COMMENT THE AGENT POSTED]</p>
+</div>
+<div class="rise">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">One it missed</h2>
+<p style="margin: 16px 0 0; max-width: 52ch">[A BUG NO VERSION FOUND]</p>
+<p style="margin: 16px 0 0; max-width: 52ch">[WHY IT WAS MISSED, AND WHAT WOULD FIX IT]</p>
+</div>
+</section>
+
+<section style="padding: 56px 0; border-top: 1px solid #C9D1C8">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">Built to run unattended</h2>
+<div style="margin-top: 28px; border-top: 2px solid #10201B">
+<sc-for list="{{prod}}" as="p" hint-placeholder-count="6">
+<div class="rise" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 8px 48px; padding: 22px 0; border-bottom: 1px solid #C9D1C8">
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.25">{{p.what}}</h3>
+<p style="margin: 0; color: #33443D">{{p.how}}</p>
+</div>
+</sc-for>
+</div>
+<p style="margin: 24px 0 0; max-width: 70ch; color: #4A5A53">LangChain and LangGraph for the agents, LangSmith for tracing and evaluation, FastAPI for the webhook, Docker for the sandbox. [CONFIRM AGAINST WHAT YOU ACTUALLY USED]</p>
+</section>
+
+<section style="padding: 56px 0 88px; border-top: 2px solid #10201B">
+<a class="sweep btn" href="Main.dc.html" style="display: inline-block; padding: 12px 20px; border: 1.5px solid #10201B; border-radius: 999px; font-weight: 600; text-decoration: none">Back to all work</a>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"highlight":{"editor":"color","default":"#FFD84A","options":["#FFD84A","#9BE8C4","#FFB38A","#B9D4FF"]},"$preview":{"width":1440,"height":4600}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { s: 6 };
+this.timers = [];
+this.late = [];
+}
+componentDidMount() {
+if (typeof window === 'undefined') return;
+this.onScroll = () => {
+const el = document.scrollingElement || document.documentElement;
+const max = el.scrollHeight - el.clientHeight;
+const bar = document.getElementById('prog');
+if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? el.scrollTop / max : 0) + ')';
+};
+window.addEventListener('scroll', this.onScroll, { passive: true });
+if (!('IntersectionObserver' in window)) return;
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+document.documentElement.classList.add('rv-on');
+this.io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.setAttribute('data-in', ''); this.io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+const watch = () => document.querySelectorAll('.rise').forEach((el) => { if (!el.hasAttribute('data-in')) this.io.observe(el); });
+watch();
+this.late = [setTimeout(watch, 400), setTimeout(watch, 1500)];
+}
+componentWillUnmount() {
+this.timers.forEach(clearTimeout);
+this.late.forEach(clearTimeout);
+if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+if (this.io) this.io.disconnect();
+}
+run() {
+this.timers.forEach(clearTimeout);
+this.timers = [];
+this.setState({ s: 0 });
+for (let i = 1; i <= 6; i++) this.timers.push(setTimeout(() => this.setState({ s: i }), i * 900));
+}
+renderVals() {
+const hl = this.props.highlight ?? '#FFD84A';
+const s = this.state.s;
+const node = (i) => 'padding: 12px 16px; border-radius: 10px; font-weight: 600; border: 1.5px ' + (i <= s ? 'solid' : 'dashed') + ' #10201B; background: ' + (i === s && s < 6 ? hl : i <= s ? '#F2F4EF' : 'transparent') + '; opacity: ' + (i <= s ? 1 : 0.3) + '; transition: opacity .4s, background .4s';
+const line = (i) => 'width: 24px; height: 2px; background: #10201B; opacity: ' + (i <= s ? 1 : 0.2) + '; transition: opacity .4s';
+const group = (i) => 'padding: 18px; border-radius: 12px; border: 1.5px ' + (i <= s ? 'solid' : 'dashed') + ' #10201B; background: ' + (i === s ? hl : 'transparent') + '; opacity: ' + (i <= s ? 1 : 0.3) + '; transition: opacity .4s, background .4s';
+const inner = (i) => 'padding: 12px 14px; border-radius: 10px; border: 1.5px solid #10201B; background: #FBFCF9; transform: scale(' + (i <= s ? 1 : 0.94) + '); transition: transform .45s cubic-bezier(.3,1.6,.5,1)';
+const cls = (i) => (i === s && s < 6 ? 'pulse' : '');
+const workers = ['Worker for file 1', 'Worker for file 2', 'Worker for file 3', 'as many as needed'].map((label, i) => ({ label, style: 'padding: 12px 14px; border-radius: 10px; border: 1.5px solid #10201B; background: #FBFCF9; opacity: ' + (s >= 3 ? 1 : 0) + '; transform: translateY(' + (s >= 3 ? 0 : 14) + 'px) scale(' + (s >= 3 ? 1 : 0.9) + '); transition: opacity .4s ' + (i * 110) + 'ms, transform .5s cubic-bezier(.3,1.6,.5,1) ' + (i * 110) + 'ms' }));
+const notes = [
+'A pull request arrives.',
+'The orchestrator reads the diff and decides which reviewers it needs.',
+'It calls the standing specialists. They already exist and have fixed jobs.',
+'The change is large, so it creates one temporary worker per file.',
+'A verifier checks every finding against the code and drops the weak ones.',
+'The run pauses here until a person decides.',
+'Approved findings are posted. Press the button to watch a run.'
+];
+const rows = [{ name: 'One agent' }, { name: 'Orchestrator calling specialists' }, { name: 'Plus spawned workers' }, { name: 'Plus verifier' }];
+const prod = [
+{ what: 'Limits on every agent', how: 'A cap on steps, tokens and time. A review that hits a cap ends with a clear partial result. [YOUR ACTUAL LIMITS]' },
+{ what: 'Resumes after a crash', how: 'State is saved after every step, so a stopped or paused review picks up where it left off.' },
+{ what: 'Nothing posted without approval', how: 'The run pauses before posting and a person approves, edits or rejects each finding.' },
+{ what: 'Code runs in a sandbox', how: 'Tests from a pull request run in a container with no network and a read-only copy of the code.' },
+{ what: 'Diffs are treated as untrusted', how: 'Instructions hidden in comments were planted to try to steer the reviewer. [RESULT OF THE INJECTION TEST]' },
+{ what: 'Cost is tracked per agent', how: '[WHICH AGENT COST THE MOST, AND WHAT YOU DID ABOUT IT]' }
+];
+return {
+hl, note: notes[s], run: () => this.run(), workers, rows, prod,
+s0: node(0), s1: node(1), s4: node(4), s5: node(5), s6: node(6),
+l1: line(1), l5: line(5), l6: line(6),
+g2: group(2), g3: group(3), b2: inner(2),
+c0: cls(0), c1: cls(1), c2: '', c4: cls(4), c5: cls(5), c6: cls(6)
+};
+}
+}
+</script>
+</body>
+</html>

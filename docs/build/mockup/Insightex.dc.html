@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Insightex case study</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:#F2F4EF}
+a{color:#10201B}a:hover{color:#2E5A4C}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid #10201B;outline-offset:3px}
+.sweep{background-image:linear-gradient(var(--hl),var(--hl));background-repeat:no-repeat;background-size:0% 100%;transition:background-size .4s cubic-bezier(.2,.8,.2,1)}
+.sweep:hover,.sweep:focus-visible{background-size:100% 100%}
+.intro{animation:intro .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes intro{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.swap{animation:swap .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes swap{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.rv-on .rise{opacity:0;transform:translateY(56px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
+.rv-on .rise[data-in]{opacity:1;transform:none}
+.rv-on .bar{transform:scaleX(0);transform-origin:left;transition:transform 1.3s cubic-bezier(.2,.8,.2,1) .15s}
+.rv-on .bar[data-in]{transform:scaleX(1)}
+.btn{transition:transform .2s,box-shadow .2s,background-size .4s cubic-bezier(.2,.8,.2,1)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 4px 0 #10201B}
+.btn:active{transform:translateY(0);box-shadow:0 0 0 #10201B}
+@media (prefers-reduced-motion: reduce){.intro,.swap{animation:none}.sweep,.btn{transition:none}}
+</style>
+</helmet>
+<div style="--hl: {{hl}}; background: #F2F4EF; color: #10201B; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 17px; line-height: 1.6">
+
+<header style="position: sticky; top: 0; z-index: 5; background: rgba(242,244,239,.92); backdrop-filter: blur(8px); border-bottom: 1px solid #C9D1C8">
+<div style="max-width: 1120px; margin: 0 auto; padding: 6px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px">
+<a href="Main.dc.html" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; padding: 12px 0">Bilal Aamir</a>
+<a href="Main.dc.html" style="font-weight: 500; padding: 12px 0">Back to all work</a>
+</div>
+<div id="prog" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: #10201B; transform: scaleX(0); transform-origin: left"></div>
+</header>
+
+<main style="max-width: 1120px; margin: 0 auto; padding: 0 32px">
+
+<section style="padding: 88px 0 64px">
+<p class="intro" style="margin: 0 0 16px; color: #4A5A53">Final-year project, in development. Two-person team. [CONFIRM: one line on your part of the work]</p>
+<h1 class="intro" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(40px, 6.2vw, 88px); line-height: 1.02; letter-spacing: -0.02em; animation-delay: .1s">Insightex</h1>
+<p class="intro" style="margin: 28px 0 0; max-width: 60ch; font-size: 22px; line-height: 1.45; color: #33443D; animation-delay: .2s">Ask a question about a lecture video and land on the moment that answers it, even when the lecturer keeps switching between Hindi or Urdu and English.</p>
+<div class="intro" style="margin-top: 28px; animation-delay: .3s">
+<a class="sweep btn"href="https://github.com/BilalAamir4/Insightex-ASR-Hybrid-RAG-FYP" style="display: inline-block; padding: 12px 20px; border: 1.5px solid #10201B; border-radius: 999px; font-weight: 600; text-decoration: none">View the repository</a>
+</div>
+</section>
+
+<section class="rise" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px 64px; padding: 56px 0; border-top: 2px solid #10201B">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">The problem</h2>
+<div style="max-width: 62ch">
+<p style="margin: 0">A recorded lecture is hard to revise from. You remember the teacher explained something, and finding it means scrubbing through an hour of video.</p>
+<p style="margin: 16px 0 0">Search tools built for English do badly here, because many lectures in Pakistan and India are spoken in a mix: a sentence starts in Urdu or Hindi and the technical terms arrive in English. Students also type questions in Roman Urdu. Insightex is built for that mix, and every answer points back to a timestamp so you can check it against the video.</p>
+</div>
+</section>
+
+<section style="padding: 56px 0; border-top: 1px solid #C9D1C8">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">How a lecture becomes searchable</h2>
+<p style="margin: 12px 0 0; max-width: 62ch; color: #33443D">Pick a stage to see what it does and whether it is built yet.</p>
+
+<div role="group" aria-label="Pipeline stages" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 0; margin-top: 32px">
+<sc-for list="{{stages}}" as="s" hint-placeholder-count="7">
+<div aria-hidden="true" style="{{s.lineStyle}}"></div>
+<button type="button" aria-pressed="{{s.pressed}}" onClick="{{s.pick}}" style="{{s.style}}">{{s.name}}</button>
+</sc-for>
+</div>
+
+<sc-for list="{{detail}}" as="d" hint-placeholder-count="1">
+<div class="swap" style="margin-top: 28px; border: 1.5px solid #10201B; border-radius: 14px; background: #FBFCF9; padding: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 48px; min-height: 150px">
+<div>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 600">{{d.name}}</h3>
+<p style="{{d.statusStyle}}">{{d.status}}</p>
+</div>
+<div>
+<p style="margin: 0; max-width: 56ch">{{d.what}}</p>
+<p style="margin: 12px 0 0; max-width: 56ch; color: #4A5A53">{{d.tools}}</p>
+</div>
+</div>
+</sc-for>
+
+<p style="margin: 20px 0 0; max-width: 70ch; color: #4A5A53">Reading slides and whiteboards from the video frames is an optional track. It runs only if a test on 30 frames passes, and it never blocks the speech pipeline.</p>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px 64px; padding: 56px 0; border-top: 1px solid #C9D1C8">
+<div class="rise">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">One 8 GB graphics card</h2>
+<p style="margin: 16px 0 0; max-width: 52ch">The whole system runs locally on an RTX 3070. No two models fit in memory together, so each stage loads its model, does its work and unloads before the next one starts. A lease makes sure only one job holds the card.</p>
+<p style="margin: 16px 0 0; max-width: 52ch">Questions are embedded on the CPU in about 50 milliseconds, which keeps the card free for the language model while someone is asking.</p>
+</div>
+<div role="img" aria-label="Peak graphics memory by stage, against an 8 GB limit: transcription 4.4 GB, embedding 1.1 GB, largest language model tested 7.7 GB">
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div>
+<div style="display: flex; justify-content: space-between; font-weight: 500"><span>Transcription</span><span style="font-variant-numeric: tabular-nums">4.4 GB</span></div>
+<div style="height: 22px; margin-top: 6px; background: #DDE3DC; border-radius: 4px"><div class="bar" style="height: 100%; width: 55%; background: #2E5A4C; border-radius: 4px"></div></div>
+</div>
+<div>
+<div style="display: flex; justify-content: space-between; font-weight: 500"><span>Embedding the transcript</span><span style="font-variant-numeric: tabular-nums">1.1 GB</span></div>
+<div style="height: 22px; margin-top: 6px; background: #DDE3DC; border-radius: 4px"><div class="bar" style="height: 100%; width: 14%; background: #2E5A4C; border-radius: 4px"></div></div>
+</div>
+<div>
+<div style="display: flex; justify-content: space-between; font-weight: 500"><span>Largest language model tested</span><span style="font-variant-numeric: tabular-nums">7.7 GB</span></div>
+<div style="height: 22px; margin-top: 6px; background: #DDE3DC; border-radius: 4px"><div class="bar" style="height: 100%; width: 96%; background: #10201B; border-radius: 4px"></div></div>
+</div>
+</div>
+<p style="margin: 14px 0 0; font-size: 14px; color: #4A5A53">Peak memory per stage. The full width of each track is the card's 8 GB.</p>
+</div>
+</section>
+
+<section style="padding: 56px 0; border-top: 1px solid #C9D1C8">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">Decisions, and what decided them</h2>
+<p style="margin: 12px 0 0; max-width: 64ch; color: #33443D">Each choice below was a test with its pass rule written before the run. When two options tie, the simpler or smaller one stays.</p>
+<div style="margin-top: 28px; border-top: 2px solid #10201B">
+<sc-for list="{{decisions}}" as="r" hint-placeholder-count="7">
+<div class="rise" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px 40px; padding: 22px 0; border-bottom: 1px solid #C9D1C8">
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.25">{{r.q}}</h3>
+<p style="margin: 0; color: #33443D">{{r.found}}</p>
+<p style="margin: 0; font-weight: 600"><span style="background: var(--hl); padding: 2px 6px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone">{{r.kept}}</span></p>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px 64px; padding: 56px 0; border-top: 1px solid #C9D1C8">
+<div class="rise">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">What works today</h2>
+<ul style="margin: 20px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; max-width: 52ch">
+<li>Paste a link or upload a video and watch it process.</li>
+<li>An 11-minute lecture is transcribed in 78 seconds.</li>
+<li>Ask in English or Roman Urdu and get three timestamps in about a second. Each one seeks the player.</li>
+<li>Jobs survive a crash and resume where they stopped.</li>
+</ul>
+</div>
+<div class="rise">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; font-weight: 700; line-height: 1.1">What is still hard</h2>
+<ul style="margin: 20px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 12px; max-width: 52ch">
+<li>Concept extraction is weak so far: both models scored an F1 near 0.3 on the development lecture. The run on a second, unseen lecture is next.</li>
+<li>Deciding what counts as "a concept" is hard for people too. Two of us labelling the same windows agreed at an F1 of 0.24 under strict name matching.</li>
+<li>Retrieval has been measured on one lecture. More lectures and more speakers come before any accuracy claim.</li>
+</ul>
+</div>
+</section>
+
+<section style="padding: 56px 0 88px; border-top: 2px solid #10201B">
+<a class="sweep btn"href="Main.dc.html" style="display: inline-block; padding: 12px 20px; border: 1.5px solid #10201B; border-radius: 999px; font-weight: 600; text-decoration: none">Back to all work</a>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"highlight":{"editor":"color","default":"#FFD84A","options":["#FFD84A","#9BE8C4","#FFB38A","#B9D4FF"]},"$preview":{"width":1440,"height":4500}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { s: 3 };
+this.late = [];
+}
+componentDidMount() {
+if (typeof window === 'undefined') return;
+this.onScroll = () => {
+const el = document.scrollingElement || document.documentElement;
+const max = el.scrollHeight - el.clientHeight;
+const bar = document.getElementById('prog');
+if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? el.scrollTop / max : 0) + ')';
+};
+window.addEventListener('scroll', this.onScroll, { passive: true });
+if (!('IntersectionObserver' in window)) return;
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+document.documentElement.classList.add('rv-on');
+this.io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.setAttribute('data-in', ''); this.io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+const watch = () => document.querySelectorAll('.rise, .bar').forEach((el) => { if (!el.hasAttribute('data-in')) this.io.observe(el); });
+watch();
+this.late = [setTimeout(watch, 400), setTimeout(watch, 1500)];
+}
+componentWillUnmount() {
+this.late.forEach(clearTimeout);
+if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+if (this.io) this.io.disconnect();
+}
+renderVals() {
+const hl = this.props.highlight ?? '#FFD84A';
+const cur = this.state.s;
+const data = [
+{ name: 'Ingest', status: 'Built', what: 'Takes an uploaded file or a video link, checks it, and normalises it to one video format plus a 16 kHz audio track. Odd codecs are rejected with a clear error.', tools: 'ffmpeg and ffprobe, a SQLite job queue, one worker.' },
+{ name: 'Transcribe', status: 'Built', what: 'Turns the audio into a timestamped transcript in the language the lecture is spoken in. The user picks that language; nothing is auto-detected.', tools: 'faster-whisper large-v3. A 688-second lecture takes 78 seconds.' },
+{ name: 'Window and embed', status: 'Built', what: 'Cuts the transcript into fixed 30-second windows and stores a vector for each, so a question can be matched to a stretch of the video.', tools: 'BGE-M3 embeddings in a FAISS index.' },
+{ name: 'Ask', status: 'Built', what: 'Rewrites the question into English, searches with both the rewrite and the original, merges the two rankings, and returns the top three windows as timestamps that seek the player.', tools: 'A local model for the rewrite with a 2-second timeout. If it is slow, the original question is used alone.' },
+{ name: 'Extract concepts', status: 'In progress', what: 'Reads each window and pulls out the concepts it explains and how they relate, as structured JSON checked against a schema.', tools: 'Gemma 4 E4B through Ollama, scored against hand-labelled windows.' },
+{ name: 'Graph and router', status: 'Planned', what: 'Builds a knowledge graph from the concepts and routes each question to the graph, the vector index, or both. The router stays only if it beats vector search on its own.', tools: 'NetworkX for the graph.' },
+{ name: 'Link the textbook', status: 'Planned', what: 'Matches moments in the lecture to pages of the course textbook, so an answer can cite a timestamp and a page.', tools: 'PyMuPDF for page text and printed page numbers.' }
+];
+const tone = { 'Built': '#2E5A4C', 'In progress': '#10201B', 'Planned': '#4A5A53' };
+const stages = data.map((d, i) => {
+const on = i === cur;
+const built = d.status === 'Built';
+return {
+name: d.name,
+pressed: on ? 'true' : 'false',
+pick: () => this.setState({ s: i }),
+lineStyle: i === 0 ? 'display: none' : 'width: 20px; height: 2px; background: #10201B; opacity: ' + (built ? 1 : 0.3),
+style: 'min-height: 44px; padding: 10px 16px; border-radius: 10px; font-weight: 600; color: #10201B; white-space: nowrap; border: 1.5px ' + (built ? 'solid' : 'dashed') + ' #10201B; background: ' + (on ? hl : 'transparent') + '; transform: translateY(' + (on ? -4 : 0) + 'px); box-shadow: ' + (on ? '0 4px 0 #10201B' : '0 0 0 #10201B') + '; transition: background .25s, transform .25s, box-shadow .25s'
+};
+});
+const d = data[cur];
+const detail = [{ name: d.name, status: d.status, what: d.what, tools: d.tools, statusStyle: 'margin: 8px 0 0; font-weight: 600; color: ' + tone[d.status] }];
+const decisions = [
+{ q: 'Which speech model?', found: 'Four setups on a full lecture. The medium model dropped 21.9% of the speech, and with auto-detect it translated Hindi into English. Large-v3 with a fixed language dropped under 2%.', kept: 'Large-v3, language set by the user' },
+{ q: 'Which embedding model?', found: 'BGE-M3 against Qwen3-Embedding-0.6B on 28 questions. A tie.', kept: 'BGE-M3' },
+{ q: 'How should the transcript be cut?', found: 'A fixed 30-second grid against overlapping windows and against snapping to sentence edges. Both ties.', kept: 'The fixed grid' },
+{ q: 'Dense search alone, or dense plus keyword?', found: 'Adding the sparse keyword signal did not change the result.', kept: 'Dense only' },
+{ q: 'What about Roman Urdu questions?', found: 'They lost three questions net against their English twins. Rewriting to English and merging both rankings turned that into a gain of two, with English unchanged.', kept: 'Rewrite, then merge' },
+{ q: 'Which model reads the transcript?', found: 'Qwen 3.5 against Gemma 4 E4B on hand-labelled windows. A tie.', kept: 'Gemma, the smaller one' },
+{ q: 'Translate before extracting?', found: 'Feeding the model an English translation instead of the original transcript made no difference.', kept: 'The original, one step fewer' }
+];
+return { hl, stages, detail, decisions };
+}
+}
+</script>
+</body>
+</html>
