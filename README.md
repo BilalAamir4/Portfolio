@@ -46,3 +46,5 @@ To publish one:
 3. Run `npm run build`. Before building, `scripts/check-content.mjs` fails with a list of problems if a published project still has a required field set to `null`, if any text in `content/` contains a `[PLACEHOLDER]`, or if a published project still has the mockup's template wording. Fix what it lists and build again.
 
 Fields that may stay empty on a published project (the Insightex role line, the RAG results table) are listed in `optionalWhenPublished` in `content/schema.ts`.
+
+Live site: https://bilal-aamir-seven.vercel.app (deploys from `main` on Vercel).
