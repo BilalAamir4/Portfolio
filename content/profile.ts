@@ -67,6 +67,11 @@ export const profile: Profile = {
       text: "Python, LangChain and LangGraph for pipelines and agents. FAISS and BGE-M3 for retrieval, faster-whisper for speech, Ollama for local models, FastAPI for serving. PyTorch and scikit-learn underneath.",
     },
   },
+  notFound: {
+    title: "Page not found",
+    heading: "Nothing lives at this address.",
+    text: "The page may have moved, or the project behind it is not published yet. Everything that is public is on the home page.",
+  },
   contact: {
     intro: "I'm looking for an AI engineering internship. The fastest way to reach me is email.",
     email: "bilalaamirr@gmail.com",

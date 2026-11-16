@@ -155,6 +155,7 @@ export const insightex: InsightexProject = {
         "Questions are embedded on the CPU in about 50 milliseconds, which keeps the card free for the language model while someone is asking.",
       ],
       cardGb: 8,
+      valueTemplate: "{n} GB",
       ariaLabel:
         "Peak graphics memory by stage, against an 8 GB limit: transcription 4.4 GB, embedding 1.1 GB, largest language model tested 7.7 GB",
       bars: [

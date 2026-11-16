@@ -74,6 +74,12 @@ export type Profile = {
     certificates: { heading: string; items: Certificate[] };
     skills: { heading: string; text: string };
   };
+  /** app/not-found.tsx */
+  notFound: {
+    title: string;
+    heading: string;
+    text: string;
+  };
   contact: {
     intro: string;
     email: string;
@@ -199,6 +205,8 @@ export type InsightexProject = InsightexFacts & {
       heading: string;
       paragraphs: string[];
       cardGb: number;
+      /** "{n} GB" */
+      valueTemplate: string;
       ariaLabel: string;
       bars: { label: string; gb: number; tone: "moss" | "ink" }[];
       caption: string;
@@ -382,6 +390,8 @@ export type AgentProject = AgentFacts & {
   caseStudy: {
     introLine: string;
     lead: string;
+    /** Text of the link to `demoUrl`. */
+    demoLabel: string | null;
     question: {
       heading: string;
       paragraph: string;
@@ -401,6 +411,14 @@ export type AgentProject = AgentFacts & {
       runsTemplate: string;
       columns: {
         version: string;
+        recall: string;
+        precision: string;
+        falseAlarms: string;
+        cost: string;
+        time: string;
+      };
+      /** "{n}" is the value. */
+      formats: {
         recall: string;
         precision: string;
         falseAlarms: string;

@@ -31,6 +31,7 @@ Every field below is required before `published` can be set to `true` in `conten
 - [ ] `slug`, lowercase letters and hyphens; the page becomes `/work/<slug>`
 - [ ] `repoUrl`, the repository link
 - [ ] `demoUrl`, the demo recording link
+- [ ] `caseStudy.demoLabel` (outside the `facts` object), the text of the demo recording link
 - [ ] `homeHeadline`, one sentence with the headline result, shown on the home page
 - [ ] `datasetSize`, how many pull requests were prepared with planted bugs
 - [ ] `runsPerConfig`, how many times each version ran on the full set

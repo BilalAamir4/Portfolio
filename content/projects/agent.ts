@@ -62,6 +62,7 @@ export const agent: AgentProject = {
     // Template wording from the mockup. Replace before publishing.
     introLine: "Template page. Every value in square brackets gets filled in once the project is built.",
     lead,
+    demoLabel: null,
     question: {
       heading: "The question",
       paragraph:
@@ -97,6 +98,13 @@ export const agent: AgentProject = {
         falseAlarms: "False alarms per clean PR",
         cost: "Cost per review",
         time: "Time per review",
+      },
+      formats: {
+        recall: "{n}%",
+        precision: "{n}%",
+        falseAlarms: "{n}",
+        cost: "${n}",
+        time: "{n} s",
       },
     },
     caughtHeading: "One it caught",
