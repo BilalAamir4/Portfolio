@@ -37,7 +37,7 @@ export const profile: Profile = {
     heading: "Background",
     education: {
       heading: "Education",
-      text: "BS Information Technology, Bahria University Islamabad. Graduating in 2027 with a CGPA of 3.63 out of 4.0 so far.",
+      text: "BS Information Technology, Bahria University Islamabad. Graduating in 2027 with a CGPA of 3.68 out of 4.0 so far.",
     },
     experience: {
       heading: "Experience",
@@ -47,17 +47,17 @@ export const profile: Profile = {
       heading: "Certificates",
       items: [
         {
-          name: null,
+          name: "Machine Learning Specialization",
           issuer: "DeepLearning.AI",
           url: "https://coursera.org/share/34f2d5ef4070acd2f9a61f182f1d2334",
         },
         {
-          name: null,
+          name: "Deep Learning Specialization",
           issuer: "DeepLearning.AI",
           url: "https://coursera.org/share/712773fd156ec00beff0032736461611",
         },
         {
-          name: null,
+          name: "Retrieval-Augmented Generation (RAG)",
           issuer: "DeepLearning.AI",
           url: "https://coursera.org/share/8476c5dec1d619f60d6b35b7dbdae591",
         },

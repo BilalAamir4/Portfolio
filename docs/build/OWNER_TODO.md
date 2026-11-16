@@ -6,14 +6,14 @@ When a project's README has its "Portfolio facts" block filled in, prompt 5 (`do
 
 ## Before launch
 
-- [ ] **Certificate 1 name.** `content/profile.ts` → `background.certificates.items[0].name`. URL already set: https://coursera.org/share/34f2d5ef4070acd2f9a61f182f1d2334
-- [ ] **Certificate 2 name.** `content/profile.ts` → `background.certificates.items[1].name`. URL already set: https://coursera.org/share/712773fd156ec00beff0032736461611
-- [ ] **Certificate 3 name.** `content/profile.ts` → `background.certificates.items[2].name`. URL already set: https://coursera.org/share/8476c5dec1d619f60d6b35b7dbdae591
+- [x] **Certificate 1 name : Machine Learning Specialization.** `content/profile.ts` → `background.certificates.items[0].name`. URL already set: https://coursera.org/share/34f2d5ef4070acd2f9a61f182f1d2334
+- [x] **Certificate 2 name.** `content/profile.ts` → `background.certificates.items[1].name`. URL already set: https://coursera.org/share/712773fd156ec00beff0032736461611
+- [x] **Certificate 3 name.** `content/profile.ts` → `background.certificates.items[2].name`. URL already set: https://coursera.org/share/8476c5dec1d619f60d6b35b7dbdae591
       A certificate shows only when both its name and URL are set. The issuer, DeepLearning.AI, is already filled in.
-- [ ] **Insightex role line**, one line on your part of the two-person project. `content/projects/insightex.ts` → `facts.roleLine` (key `roleLine` in the README facts block). Hidden until supplied.
+- [x] **Insightex role line**, one line on your part of the two-person project. `content/projects/insightex.ts` → `facts.roleLine` (key `roleLine` in the README facts block). Hidden until supplied.
 - [ ] **Résumé PDF.** Put the file at `public/resume.pdf`, then set `content/profile.ts` → `contact.resume.href` to `"/resume.pdf"` and `contact.resume.label` to the link text you want. The link stays hidden until both are set.
-- [ ] **Confirm the LinkedIn URL.** `content/profile.ts` → `contact.links` (LinkedIn), currently `https://www.linkedin.com/in/bilalaamir4`.
-- [ ] **Production site URL.** Set the environment variable `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`, no trailing slash) in the hosting provider. It is the base for Open Graph, the sitemap, robots.txt and canonical links. See `.env.example`. Without it a Vercel deployment falls back to the project's production `*.vercel.app` domain, and a local build to `http://localhost:3000`.
+- [x] **Confirm the LinkedIn URL.** `content/profile.ts` → `contact.links` (LinkedIn), currently `https://www.linkedin.com/in/bilalaamir4`.
+- [x] **Production site URL.** Set the environment variable `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.com`, no trailing slash) in the hosting provider. It is the base for Open Graph, the sitemap, robots.txt and canonical links. See `.env.example`. Without it a Vercel deployment falls back to the project's production `*.vercel.app` domain, and a local build to `http://localhost:3000`. : Use the Vercel address
 
 ## Agentic RAG Docs Assistant (published, results pending)
 
