@@ -7,7 +7,8 @@ import { articleFor, clock, lowerFirst } from "../../lib/format.ts";
  */
 const facts: InsightexFacts = {
   status: "In development",
-  roleLine: null,
+  roleLine:
+    "Co-developed from speech recognition to timestamped answers; now working on concept extraction and the knowledge-graph router.",
   transcribeSeconds: 78,
   lectureSeconds: 688,
   answerLatencyText: "About one second",
